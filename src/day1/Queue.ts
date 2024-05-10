@@ -26,17 +26,23 @@ export default class Queue<T> {
         this.tail.next = node;
         this.tail = node;
     }
-    dequeue(): T | undefined {
+    deque(): T | undefined {
         if (!this.head) {
             return undefined;
         }
 
-        // decrement the lenght
+        // decrement the length
         this.length--;
         const head = this.head;
         this.head = this.head.next;
 
         // without garbage collection we could do a cleanup here like head.next = undefined
+        head.next = undefined;
+
+        if (this.length === 0) {
+            this.tail = undefined;
+        }
+
         return head.value;
     }
 
